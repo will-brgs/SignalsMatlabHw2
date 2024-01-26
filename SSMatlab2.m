@@ -18,13 +18,14 @@ figure();
 NRange = [3,10,21];
 for i = 1:3 % range of 3 due to 3 N values
 N = NRange(i);
-n = 0:1:(N-1);
-r = ones(1,N);
+n = -1:1:(2*N+1);
+r = heaviside(n - N) - heaviside();
+r = bitxor(r,1);
 x = conv(r,r);
 
 % Subplot results
 subplot(3,1,i)
-stem(n,x(1:N),'filled') %Use Stem plot for DT
+stem(n,x(1:2*N-1),'filled') %Use Stem plot for DT
 title(['Convolution for N = ',num2str(N)]);
 xlabel('n');
 ylabel('x[n]');
