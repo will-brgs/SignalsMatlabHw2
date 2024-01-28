@@ -14,19 +14,20 @@ samplePeriod = 1/sampleFreq;
 
 timeRange = 0:samplePeriod:15*tau;
 %% Part 1: Compute discrete-time Convolution for a finite-length Function
+oldparam = sympref('HeavisideAtOrigin',1);
 figure();
 NRange = [3,10,21];
 for i = 1:3 % range of 3 due to 3 N values
 N = NRange(i);
-n = -1:1:(2*N+1);
-r = heaviside(n - N) - heaviside();
-r = bitxor(r,1);
+n = -1*N:1:(4*N);
+r = heaviside(n) - heaviside(n-N);
 x = conv(r,r);
-
+x = x(1:length(n));
+%%
 % Subplot results
 subplot(3,1,i)
-stem(n,x(1:2*N-1),'filled') %Use Stem plot for DT
-title(['Convolution for N = ',num2str(N)]);
+stem(n,x,'filled') %Use Stem plot for DT
+title(['Convolution for N = ', num2str(N)]);
 xlabel('n');
 ylabel('x[n]');
 end
