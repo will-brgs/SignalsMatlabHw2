@@ -14,6 +14,7 @@ samplePeriod = 1/sampleFreq;
 
 timeRange = 0:samplePeriod:15*tau;
 %% Part 1: Compute discrete-time Convolution for a finite-length Function
+%% Part 1 A
 oldparam = sympref('HeavisideAtOrigin',1);
 figure();
 NRange = [3,10,21];
@@ -23,7 +24,7 @@ n = -1*N:1:(4*N);
 r = heaviside(n) - heaviside(n-N);
 x = conv(r,r);
 x = x(1:length(n));
-%%
+
 % Subplot results
 subplot(3,1,i)
 stem(n,x,'filled') %Use Stem plot for DT
@@ -32,25 +33,29 @@ xlabel('n');
 ylabel('x[n]');
 end
 sgtitle('DT Convolution outputs for varying N')
-%%
-figure()
+%% Part 1 B
 N = 21;
-n = 0:N-1;
-r = ones(1,N);
+n = -200:1:200;
+r = heaviside(n) - heaviside(n-N);
 x = conv(r,r);
+%x = x(1:length(n));
 
 MRange = [10,25,50];
-nRange = -200:1:200;
+
+figure()
 for i = 1:3 %range of 3 due to 3 M values
 M = MRange(i);
-sum = zeros(size(nRange));
-    for k = -200:200
-    sum = sum + dirac(n - k*M);
+sum = zeros(1,range(n)+1);
+    for k = 1:(range(n)+1)
+        if mod(k,M)==0
+            sum(i)=1;
+        end   
     end
 y = conv(x,sum);
 
+
 subplot(3,1,i)
-stem(nRange,y,'filled')
+stem(linspace(-200,200, length(y)),y,'filled')
 title(['Convolution for N = 21 & M = ',num2str(M)]);
 xlabel('n');
 ylabel('y[n]');
