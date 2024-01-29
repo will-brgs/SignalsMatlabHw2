@@ -48,7 +48,7 @@ M = MRange(i);
 sum = zeros(1,range(n)+1);
     for k = 1:(range(n)+1)
         if mod(k,M)==0
-            sum(i)=1;
+            sum(k)=1;
         end   
     end
 y = conv(x,sum);
